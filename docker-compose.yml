@@ -1,8 +1,11 @@
-version: "3"
+version: '3'
 services:
   web:
-    # replace username/repo:tag with your name and image details
-    image: express
+    build: .
+    command: npm start
+    volumes:
+      - .:/opt/app/
+      - /opt/app/node_modules
     deploy:
       replicas: 5
       resources:
@@ -12,9 +15,5 @@ services:
       restart_policy:
         condition: on-failure
     ports:
-      - "4000:80"
-    networks:
-      - webnet
-networks:
-  webnet:
-
+      - "3000:3000"
+  

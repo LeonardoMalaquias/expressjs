@@ -1,17 +1,11 @@
 #OFICIAL IMAGE FOR NODE
 FROM node
-
+#alteracao no meu codigo
 #set workdir
-WORKDIR /opt/service
+WORKDIR /opt/app
 
 #copy root dir to workdir
-COPY . /opt/service
+COPY . /opt/app
 
 #INSTALL
-RUN npm install
-
-#expose
-EXPOSE 3000
-
-#run app
-CMD npm start
+RUN npm install --quiet
