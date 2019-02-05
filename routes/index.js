@@ -7,12 +7,23 @@ router.get('/', function(req, res, next) {
   
   /*Get all Products*/
   request.get(process.env.API_URL + "/company", (err, response, data)=>{
+  	
   	if(err){
   		return next(err);
   	}
-  	console.log(data);
-  	//res.render('index', {'allCompany': data});
-  	res.render('index', {'allCompany': JSON.parse(data)});
+
+  	companyList = JSON.parse(data);
+  	
+  	forList = [];
+  	
+  	companyList.forEach((element, index)=>{
+  		forList.indexOf(element.for) == -1 ? forList.push(element.for) : '';
+  	});
+  	
+  	console.log(companyList);
+  	console.log(forList);
+  	
+  	res.render('index', {'allCompany': companyList, 'allFor': forList});
   });
   
 });
@@ -22,5 +33,4 @@ router.get('/', function(req, res, next) {
 router.get('/home3', function(req, res, next){
 	res.render('home-03', {title: 'Express'});
 });*/
-
 module.exports = router;
