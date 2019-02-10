@@ -3,26 +3,27 @@ var router = express.Router();
 var request = require('request');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/:name', function(req, res, next) {
   
   /*Get all Products*/
-  request.get(process.env.API_URL + "/marketplace", (err, response, data)=>{
+  request.get(process.env.API_URL + "/product", {filter:{"marketplaceId":req.param.name}}, (err, response, data)=>{
   	
   	if(err){
   		return next(err);
   	}
 
-    console.log(data);
-
-  	companyList = JSON.parse(data);
+  	productList = JSON.parse(data);
   	
   	forList = [];
   	
-  	companyList.forEach((element, index)=>{
+  	productList.forEach((element, index)=>{
   		forList.indexOf(element.for) == -1 ? forList.push(element.for) : '';
   	});
   	
-  	res.render('index', {'allCompany': companyList, 'allFor': forList});
+  	console.log(productList);
+  	console.log(forList);
+  	
+  	res.render('index-by-market', {'allProduct': productList, 'allFor': forList});
   });
   
 });
